@@ -1,5 +1,5 @@
 const http = require("http");
-const { hookNotFound } = require("./hooks/");
+const { hookStaticResource, hookNotFound } = require("./hooks/");
 const { hostname, port } = require("./config/server");
 
 const server = http.createServer(async (req, res) => {
@@ -10,6 +10,7 @@ const server = http.createServer(async (req, res) => {
       break;
     // 否则，表示请求静态资源
     default:
+      await hookStaticResource(req, res);
       break;
   }
 
